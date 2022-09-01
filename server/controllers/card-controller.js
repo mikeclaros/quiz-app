@@ -1,4 +1,6 @@
 const Card = require('../models/card-model')
+const _ = require('lodash/lang')
+
 
 
 class ResponseCreator {
@@ -22,15 +24,28 @@ class ResponseCreator {
             message: successMsg,
         })
     }
+
+    okStatusDataDump(cards, msg) {
+        return this.success.json({
+            success: true,
+            data: cards,
+            message: msg
+        })
+    }
+
+    checkBody(body) {
+        let msg = 'NO DATA!'
+        if (!body || _.isEmpty(body)) {
+            return this.failStatus(msg)
+        }
+    }
 }
+
 
 var createCard = async (req, res) => {
     let responseObj = new ResponseCreator(res)
-
     const body = req.body
-    if (!body) {
-        return responseObj.failStatus('Enter a question')
-    }
+    responseObj.checkBody(body)
 
     const card = new Card(body)
     if (!card) {
@@ -45,16 +60,13 @@ var createCard = async (req, res) => {
     })
 }
 
-var updateCard = async (req, res) =>{
+var updateCard = async (req, res) => {
     let responseObj = new ResponseCreator(res)
     const body = req.body
+    responseObj.checkBody(body)
 
-    if(!body){
-        return responseObj.failStatus('Invalid Body')
-    }
-
-    Card.findOne({_id: req.params.id}, (err, card) =>{
-        if(err){
+    Card.findOne({ _id: req.params.id }, (err, card) => {
+        if (err) {
             return responseObj.failStatus(err)
         }
         card.display = body.display
@@ -62,16 +74,26 @@ var updateCard = async (req, res) =>{
         card.answer = body.answer
         card.title = body.title
 
-        card.save().then(() =>{
+        card.save().then(() => {
             return responseObj.okStatus(Card, `Update OK new data: ${card.question} | ${card.answer}`)
-        }).catch(error =>{
+        }).catch(error => {
             return responseObj.failStatus(error)
         })
-        
+
     })
+}
+
+var getCards = async (req, res) => {
+    let responseObj = new ResponseCreator(res)
+
+    await Card.find({}, (err, cards) => {
+        if (err || _.isEmpty(cards)) return responseObj.failStatus((err) ? err : 'cards list empty')
+        return responseObj.okStatusDataDump(cards, "Cards Found!")
+    }).catch(err => console.log(err))
 }
 
 module.exports = {
     createCard,
-    updateCard
+    updateCard,
+    getCards
 }
