@@ -7,6 +7,7 @@ class ResponseCreator {
     constructor(res) {
         this.res = res
         this.success = this.res.status(201)
+        this.notFound = this.res.status(404)
         this.fail = this.res.status(400)
     }
 
@@ -14,6 +15,13 @@ class ResponseCreator {
         return this.fail.json({
             success: false,
             error: errorMsg
+        })
+    }
+
+    nothingHere(msg) {
+        return this.notFound.json({
+            success: false,
+            error: msg
         })
     }
 
@@ -95,7 +103,9 @@ var getCards = async (req, res) => {
     let responseObj = new ResponseCreator(res)
 
     await Card.find({}, (err, cards) => {
-        if (err || _.isEmpty(cards)) return responseObj.failStatus((err) ? err : 'cards list empty')
+        //if (err || _.isEmpty(cards)) return responseObj.failStatus((err) ? err : 'cards list empty')
+        if (err) return responseObj.failStatus(err)
+        if (_.isEmpty(cards)) return responseObj.nothingHere('no cards!')
         return responseObj.okStatusDataDump(cards, "Cards Found!")
     }).catch(err => console.log(err))
 }
@@ -111,7 +121,8 @@ var getCardById = async (req, res) => {
 var deleteCard = async (req, res) => {
     let responseObj = new ResponseCreator(res)
     await Card.deleteOne({ _id: req.params.id }, (err, card) => {
-        if (err || card.deletedCount === 0) return responseObj.failStatus((err) ? err : 'card not here, likely deleted before')
+        if (err) return responseObj.failStatus(err)
+        if (card.deletedCount === 0) return responseObj.nothingHere('no cards to delete!')
         return responseObj.okStatusOne(card, 'Card found...to be deleted!')
     }).catch(err => console.log(err))
 }
