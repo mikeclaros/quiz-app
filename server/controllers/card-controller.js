@@ -24,7 +24,7 @@ class ResponseCreator {
     }
 }
 
-createCard = (req, res) => {
+var createCard = async (req, res) => {
     let responseObj = new ResponseCreator(res)
 
     const body = req.body
