@@ -108,9 +108,18 @@ var getCardById = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
+var deleteCard = async (req, res) => {
+    let responseObj = new ResponseCreator(res)
+    await Card.deleteOne({ _id: req.params.id }, (err, card) => {
+        if (err || card.deletedCount === 0) return responseObj.failStatus((err) ? err : 'card not here, likely deleted before')
+        return responseObj.okStatusOne(card, 'Card found...to be deleted!')
+    }).catch(err => console.log(err))
+}
+
 module.exports = {
     createCard,
     updateCard,
     getCards,
-    getCardById
+    getCardById,
+    deleteCard
 }
