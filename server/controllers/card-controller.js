@@ -33,6 +33,14 @@ class ResponseCreator {
         })
     }
 
+    okStatusOne(card, msg) {
+        return this.success.json({
+            success: true,
+            data: card,
+            message: msg
+        })
+    }
+
     checkBody(body) {
         let msg = 'NO DATA!'
         if (!body || _.isEmpty(body)) {
@@ -92,8 +100,17 @@ var getCards = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
+var getCardById = async (req, res) => {
+    let responseObj = new ResponseCreator(res)
+    await Card.findOne({ _id: req.params.id }, (err, card) => {
+        if (err || !card) return responseObj.failStatus((err) ? err : 'card not found')
+        return responseObj.okStatusOne(card, 'Card Found!')
+    }).catch(err => console.log(err))
+}
+
 module.exports = {
     createCard,
     updateCard,
-    getCards
+    getCards,
+    getCardById
 }
