@@ -45,6 +45,33 @@ var createCard = async (req, res) => {
     })
 }
 
+var updateCard = async (req, res) =>{
+    let responseObj = new ResponseCreator(res)
+    const body = req.body
+
+    if(!body){
+        return responseObj.failStatus('Invalid Body')
+    }
+
+    Card.findOne({_id: req.params.id}, (err, card) =>{
+        if(err){
+            return responseObj.failStatus(err)
+        }
+        card.display = body.display
+        card.question = body.question
+        card.answer = body.answer
+        card.title = body.title
+
+        card.save().then(() =>{
+            return responseObj.okStatus(Card, `Update OK new data: ${card.question} | ${card.answer}`)
+        }).catch(error =>{
+            return responseObj.failStatus(error)
+        })
+        
+    })
+}
+
 module.exports = {
-    createCard
+    createCard,
+    updateCard
 }
