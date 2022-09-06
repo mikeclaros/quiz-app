@@ -4,7 +4,15 @@ const bodyParser = require('body-parser')
 const port = 3000
 const db = require('./db')
 const cardRouter = require('./routes/card-router')
+const cors = require('cors')
 
+
+// const options = {
+//     origin: 'http://localhost:3000'
+// }
+// app.use(cors(options))
+app.use(cors())
+app.options('*', cors())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 

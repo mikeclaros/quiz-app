@@ -6,45 +6,38 @@ const _ = require('lodash/lang')
 class ResponseCreator {
     constructor(res) {
         this.res = res
-        this.success = this.res.status(201)
-        this.notFound = this.res.status(404)
-        this.fail = this.res.status(400)
+        // below causes return to always display status 400 for some reason
+        // this.success = this.res.status(201)
+        // this.notFound = this.res.status(404)
+        // this.fail = this.res.status(400)
     }
 
     failStatus(errorMsg) {
-        return this.fail.json({
+        return this.res.status(400).json({
             success: false,
             error: errorMsg
         })
     }
 
     nothingHere(msg) {
-        return this.notFound.json({
+        return this.res.status(404).json({
             success: false,
             error: msg
         })
     }
 
-    okStatus(schemaObj, successMsg) {
-        return this.success.json({
+    okCreated(schemaObj, successMsg) {
+        return this.res.status(201).json({
             success: true,
             id: schemaObj._id,
             message: successMsg,
         })
     }
 
-    okStatusDataDump(cards, msg) {
-        return this.success.json({
+    okStatus(dataReceived, msg) {
+        return this.res.status(200).json({
             success: true,
-            data: cards,
-            message: msg
-        })
-    }
-
-    okStatusOne(card, msg) {
-        return this.success.json({
-            success: true,
-            data: card,
+            data: dataReceived,
             message: msg
         })
     }
@@ -69,7 +62,7 @@ var createCard = async (req, res) => {
     }
 
     card.save().then(() => {
-        return responseObj.okStatus(card, 'Card created!')
+        return responseObj.okCreated(card, 'Card created!')
     }).catch(error => {
         console.log('ERROR MESSAGE: ', error)
         return responseObj.failStatus('Card not created')
@@ -103,18 +96,17 @@ var getCards = async (req, res) => {
     let responseObj = new ResponseCreator(res)
 
     await Card.find({}, (err, cards) => {
-        //if (err || _.isEmpty(cards)) return responseObj.failStatus((err) ? err : 'cards list empty')
         if (err) return responseObj.failStatus(err)
         if (_.isEmpty(cards)) return responseObj.nothingHere('no cards!')
-        return responseObj.okStatusDataDump(cards, "Cards Found!")
-    }).catch(err => console.log(err))
+        return responseObj.okStatus(cards, "Cards Found!")
+    }).clone().catch(err => console.log(err))
 }
 
 var getCardById = async (req, res) => {
     let responseObj = new ResponseCreator(res)
     await Card.findOne({ _id: req.params.id }, (err, card) => {
         if (err || !card) return responseObj.failStatus((err) ? err : 'card not found')
-        return responseObj.okStatusOne(card, 'Card Found!')
+        return responseObj.okStatus(card, 'Card Found!')
     }).catch(err => console.log(err))
 }
 
@@ -123,7 +115,7 @@ var deleteCard = async (req, res) => {
     await Card.deleteOne({ _id: req.params.id }, (err, card) => {
         if (err) return responseObj.failStatus(err)
         if (card.deletedCount === 0) return responseObj.nothingHere('no cards to delete!')
-        return responseObj.okStatusOne(card, 'Card found...to be deleted!')
+        return responseObj.okStatus(card, 'Card found...to be deleted!')
     }).catch(err => console.log(err))
 }
 
