@@ -1,8 +1,3 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom/client';
-import { Container } from '../src/Components/Container';
+import Container from '../Client/components/Container'
 
-
-
-const root = ReactDOM.createRoot(document.getElementById('root'))
-root.render(<Container />)
+export { Container }
