@@ -17,9 +17,15 @@
     padding-top: 5%;
 }
 
+.form-display {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
 
 
-.form {
+.btn {
     display: flex;
     flex-direction: row;
     justify-content: space-around;

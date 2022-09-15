@@ -5,6 +5,8 @@ import apis from '../api';
 export function Card({ value }) {
     const [cards, setCards] = useState([])
     const [curIndex, setCurIndex] = useState(-1)
+    const [grade, setGrade] = useState('')
+
     useEffect(() => { handleValue(value) }, [value])
 
 
@@ -36,25 +38,37 @@ export function Card({ value }) {
         })
     }
 
+    const handleAnswer = (e) => {
+        e.preventDefault()
+        let userAnswer = e.target.answer.value.toLowerCase()
+        let cardAnswer = cards[curIndex].answer.toLowerCase()
+        if (userAnswer !== cardAnswer) {
+            setGrade(() => 'WRONG')
+        } else {
+            setGrade(() => 'PASS')
+        }
+    }
+
     return (
-        <div >
+        <div>
             <div className='card-display'>
                 <div>
                     <div>
-                        {console.log('index ?', curIndex)}
                         {(cards.length > 0 && cards != undefined) ? cards[curIndex].question : ''}
                     </div>
                 </div>
             </div>
-
-            <div className='padding'>
-                <form className='form'>
-                    <button id="prev" onClick={(e) => handlePrev(e)}>Prev</button>
-                    <button id="submit">Submit</button>
-                    <button id="next" onClick={(e) => handleNext(e)}>Next</button>
-                </form>
+            <form className='form-display padding' onSubmit={(e) => handleAnswer(e)}>
+                <input name='answer' placeholder='Enter Answer' ></input>
+                <button id="submit">Submit</button>
+            </form>
+            <div id="status" className='form-display padding'>
+                <div>{(grade != undefined && grade !== '') ? grade : ''}</div>
             </div>
-
+            <div className='btn padding'>
+                <button id="prev" onClick={(e) => handlePrev(e)}>Prev</button>
+                <button id="next" onClick={(e) => handleNext(e)}>Next</button>
+            </div>
             {/* {data.map((item, index) => <li key={index}>{item.question}</li>)} */}
         </div>
     )
