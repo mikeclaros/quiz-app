@@ -6,7 +6,8 @@ export function Card({ value }) {
     const [cards, setCards] = useState([])
     const [curIndex, setCurIndex] = useState(-1)
     const [grade, setGrade] = useState('')
-    const [showAnswer, setShowAnswer] = useState('')
+    const [answer, setAnswer] = useState('')
+    const [showAnswer, setShowAnswer] = useState(false)
 
     useEffect(() => { handleValue(value) }, [value])
 
@@ -53,13 +54,19 @@ export function Card({ value }) {
     }
 
     const handleShow = (e) => {
+        //toggles the hide/show button AND the display of the answer
         e.preventDefault()
+        setShowAnswer(() => !showAnswer)
         let answer = cards[curIndex].answer
-        setShowAnswer(() => answer)
+        setAnswer(() => answer)
+        if (showAnswer) {
+            //if answer is shown then hide answer
+            hideAnswer()
+        }
     }
 
     function hideAnswer() {
-        setShowAnswer(() => '')
+        setAnswer(() => '')
     }
 
     return (
@@ -71,14 +78,14 @@ export function Card({ value }) {
                     </div>
                 </div>
                 <div className='padding'>
-                    {(showAnswer != undefined && showAnswer !== '') ? showAnswer : ''}
+                    {(answer != undefined && answer !== '') ? answer : ''}
                 </div>
             </div>
-            <form className='form-display' onSubmit={(e) => handleShow(e)}>
-                <button id="show">Show Answer</button>
+            <form className='form-display padding' onSubmit={(e) => handleShow(e)}>
+                <button id="showButton">{(showAnswer) ? 'Hide Answer' : 'Show Answer'}</button>
             </form>
             <form className='form-display padding' onSubmit={(e) => handleAnswer(e)}>
-                <input name='answer' placeholder='Enter Answer' ></input>
+                <input name='answer' placeholder='Enter Answer' />
                 <button id="submit">Submit</button>
             </form>
             <div id="status" className='form-display padding'>
