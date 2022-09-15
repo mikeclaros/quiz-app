@@ -6,6 +6,7 @@ export function Card({ value }) {
     const [cards, setCards] = useState([])
     const [curIndex, setCurIndex] = useState(-1)
     const [grade, setGrade] = useState('')
+    const [showAnswer, setShowAnswer] = useState('')
 
     useEffect(() => { handleValue(value) }, [value])
 
@@ -25,6 +26,7 @@ export function Card({ value }) {
                 return 0
             }
         })
+        hideAnswer()
     }
 
     const handlePrev = (e) => {
@@ -36,6 +38,7 @@ export function Card({ value }) {
                 return curIndex - 1
             }
         })
+        hideAnswer()
     }
 
     const handleAnswer = (e) => {
@@ -49,6 +52,16 @@ export function Card({ value }) {
         }
     }
 
+    const handleShow = (e) => {
+        e.preventDefault()
+        let answer = cards[curIndex].answer
+        setShowAnswer(() => answer)
+    }
+
+    function hideAnswer() {
+        setShowAnswer(() => '')
+    }
+
     return (
         <div>
             <div className='card-display'>
@@ -57,7 +70,13 @@ export function Card({ value }) {
                         {(cards.length > 0 && cards != undefined) ? cards[curIndex].question : ''}
                     </div>
                 </div>
+                <div className='padding'>
+                    {(showAnswer != undefined && showAnswer !== '') ? showAnswer : ''}
+                </div>
             </div>
+            <form className='form-display' onSubmit={(e) => handleShow(e)}>
+                <button id="show">Show Answer</button>
+            </form>
             <form className='form-display padding' onSubmit={(e) => handleAnswer(e)}>
                 <input name='answer' placeholder='Enter Answer' ></input>
                 <button id="submit">Submit</button>
