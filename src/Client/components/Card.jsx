@@ -30,6 +30,7 @@ export function Card({ value }) {
         })
         hideAnswer()
         clearEntryBox(e)
+        clearGrade()
     }
 
     const handlePrev = (e) => {
@@ -43,6 +44,7 @@ export function Card({ value }) {
         })
         hideAnswer()
         clearEntryBox(e)
+        clearGrade()
     }
 
     const handleAnswer = (e) => {
@@ -76,6 +78,10 @@ export function Card({ value }) {
         // getting input object and replacing value to '' on selecting next or prev
         let inputNode = e.target.parentNode.parentNode.children[2]
         inputNode[0].value = ''
+    }
+
+    function clearGrade() {
+        setGrade(() => '')
     }
 
     return (
