@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import apis from '../api';
 
+
 export function Card({ value }) {
     const [cards, setCards] = useState([])
     const [curIndex, setCurIndex] = useState(-1)
@@ -28,6 +29,7 @@ export function Card({ value }) {
             }
         })
         hideAnswer()
+        clearEntryBox(e)
     }
 
     const handlePrev = (e) => {
@@ -40,6 +42,7 @@ export function Card({ value }) {
             }
         })
         hideAnswer()
+        clearEntryBox(e)
     }
 
     const handleAnswer = (e) => {
@@ -69,6 +72,12 @@ export function Card({ value }) {
         setAnswer(() => '')
     }
 
+    function clearEntryBox(e) {
+        // getting input object and replacing value to '' on selecting next or prev
+        let inputNode = e.target.parentNode.parentNode.children[2]
+        inputNode[0].value = ''
+    }
+
     return (
         <div>
             <div className='card-display'>
@@ -95,7 +104,6 @@ export function Card({ value }) {
                 <button id="prev" onClick={(e) => handlePrev(e)}>Prev</button>
                 <button id="next" onClick={(e) => handleNext(e)}>Next</button>
             </div>
-            {/* {data.map((item, index) => <li key={index}>{item.question}</li>)} */}
         </div>
     )
 
