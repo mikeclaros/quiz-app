@@ -24,6 +24,24 @@
     justify-content: center;
 }
 
+.update-page-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.edit-form-display {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-evenly;
+}
+
+.basic-flex-column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
 
 .btn {
     display: flex;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import apis from '../api';
+import { EditForm } from './EditForm';
 
 
 export function Card({ value }) {
@@ -96,8 +97,12 @@ export function Card({ value }) {
                     {(answer != undefined && answer !== '') ? answer : ''}
                 </div>
             </div>
-            <form className='form-display padding' onSubmit={(e) => handleShow(e)}>
-                <button id="showButton">{(showAnswer) ? 'Hide Answer' : 'Show Answer'}</button>
+            <form className='form-display padding'>
+                <button id="showButton" onClick={(e) => handleShow(e)}>{(showAnswer) ? 'Hide Answer' : 'Show Answer'}</button>
+                {/* <button onClick={(e) => handleEdit(e)}>Edit Card</button>
+                <Form open={isOpen} /> */}
+                {/* <EditForm value={(curIndex != undefined && curIndex > -1) ? cards[curIndex]._id : ''} /> */}
+                <EditForm value={(cards != undefined && cards.length > 0) ? cards[curIndex]._id : ''} />
             </form>
             <form className='form-display padding' onSubmit={(e) => handleAnswer(e)}>
                 <input name='answer' placeholder='Enter Answer' />
