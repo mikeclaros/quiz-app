@@ -61,12 +61,12 @@ export function UpdateCard() {
             <p>CARD ID: {id}</p>
             <div className='edit-form-display'>
                 <form>
-                    <div>
-                        <span>{(!_.isEmpty(card)) ? card.data.question : ''}</span>
+                    <div className='basic-flex-column center-item'>
+                        <span className='margin-washer'>{(!_.isEmpty(card)) ? card.data.question : ''}</span>
                         <input name='question' placeholder='Edit question here' />
                     </div>
-                    <div>
-                        <span>{!_.isEmpty(card) ? card.data.answer : ''}</span>
+                    <div className='basic-flex-column center-item'>
+                        <span className='margin-washer'>{!_.isEmpty(card) ? card.data.answer : ''}</span>
                         <input name='answer' placeholder='Edit answer here' />
                     </div>
                     <button onClick={(e) => handleEdit(e)}>Submit</button>
