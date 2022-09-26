@@ -18,7 +18,7 @@ export function CardDisplay({ value }) {
         <div className='card-display'>
             <div>
                 <div>
-                    {(cards.length > 0 && cards != undefined) ? cards[curIndex].question : ''}
+                    {(cards != undefined && cards.length > 0) ? cards[curIndex].question : ''}
                 </div>
             </div>
             <div className='padding'>
