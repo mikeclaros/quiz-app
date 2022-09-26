@@ -69,7 +69,9 @@ export function UpdateCard() {
                         <span className='margin-washer'>{!_.isEmpty(card) ? card.data.answer : ''}</span>
                         <input name='answer' placeholder='Edit answer here' />
                     </div>
-                    <button onClick={(e) => handleEdit(e)}>Submit</button>
+                    <div className=' basic-flex-column margin-washer center-item'>
+                        <button onClick={(e) => handleEdit(e)}>Submit</button>
+                    </div>
                 </form>
             </div>
 
