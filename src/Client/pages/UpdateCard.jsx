@@ -21,25 +21,6 @@ export function UpdateCard() {
         }
     }
 
-    // const handleQuestionEdit = (e) => {
-    //     e.preventDefault()
-    //     console.log('in handle question edit', e.target.question.value)
-    //     editCard(e.target.question.value)
-    // }
-
-    // async function editCard(editString) {
-    //     try {
-    //         const res = await apis.editCard(id, editString)
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
-
-    // const handleAnswerEdit = (e) => {
-    //     e.preventDefault()
-    //     console.log('in handle answer edit')
-    // }
-
     const handleEdit = (e) => {
         e.preventDefault()
         console.log("in handle edit", e.target.parentNode)
@@ -58,7 +39,7 @@ export function UpdateCard() {
         } else {
             //display prompt to fill each entry
             console.log("missing values")
-            let msg = 'Missing values; Please enter for question and answer'
+            let msg = 'Missing values. Please enter for question and answer'
             alert(msg)
         }
     }

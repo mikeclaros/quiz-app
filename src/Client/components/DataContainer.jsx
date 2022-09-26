@@ -1,8 +1,8 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import apis from '../api';
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import apis from '../api'
 import '../index.css'
-import { Container } from "./Container";
+import { Container } from "./Container"
 
 export function DataContainer() {
     const [cards, setCards] = useState([])
