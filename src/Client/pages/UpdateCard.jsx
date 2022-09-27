@@ -44,6 +44,15 @@ export function UpdateCard() {
         }
     }
 
+    const handleDelete = async (e) => {
+        e.preventDefault()
+        console.log('in handle delete', e)
+        if (window.confirm('Delete this card?')) {
+            await apis.delCardById(id)
+            window.location.href = '/cards/'
+        }
+    }
+
     async function editCard(obj) {
         try {
             const res = await apis.editCard(id, obj)
@@ -70,7 +79,8 @@ export function UpdateCard() {
                         <input name='answer' placeholder='Edit answer here' />
                     </div>
                     {/*dont put this button in a div... breaks code in handleEdit*/}
-                    <button className=' basic-flex-column margin-washer center-item' onClick={(e) => handleEdit(e)}>Submit</button>
+                    <button className='basic-flex-column margin-washer center-item' onClick={(e) => handleEdit(e)}>Submit</button>
+                    <button className='basic-flex-column margin-washer center-item' onClick={(e) => handleDelete(e)}>Delete</button>
                 </form>
             </div>
 
