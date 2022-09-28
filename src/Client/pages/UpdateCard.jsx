@@ -49,7 +49,8 @@ export function UpdateCard() {
         console.log('in handle delete', e)
         if (window.confirm('Delete this card?')) {
             await apis.delCardById(id)
-            window.location.href = '/cards/'
+            //window.location.href = '/cards/' // feels awkard when return backing from this point
+            window.location.href = '/'
         }
     }
 
