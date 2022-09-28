@@ -19,7 +19,8 @@ export function ListCards() {
     }
 
     return (
-        <div className='basic-flex-column'>
+        <div className='basic-flex-column center-item'>
+            <h1>Cards</h1>
             {(!_.isEmpty(cards)) ? cards.data.map((data, index) => <CardDisplay key={index} value={{ "cards": cards.data, "answer": data.answer, "curIndex": index }} />) : console.log('error, ListCards')}
         </div>
     )
