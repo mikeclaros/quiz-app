@@ -103,9 +103,6 @@ export function Container({ value }) {
             </div>
             <div className='btn padding'>
                 <button id="prev" onClick={(e) => handlePrev(e)}>Prev</button>
-                <AddCard />
-                {/* <CardListForm value={{ "cards": cards, "answer": answer, "curIndex": curIndex }} /> */}
-                <CardListForm />
                 <button id="next" onClick={(e) => handleNext(e)}>Next</button>
             </div>
         </div>
