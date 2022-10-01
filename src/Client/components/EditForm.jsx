@@ -8,7 +8,6 @@ export function EditForm({ value }) {
     useEffect(() => { handleData(value) })
 
     const handleData = (value) => {
-        console.log('is there a value in the house???', value)
         if (value != undefined && value != '')
             setId(() => value)
     }

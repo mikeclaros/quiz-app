@@ -9,7 +9,8 @@ export function StatusLabel({ value }) {
     useEffect(() => { handleData(value) }, [value])
 
     function handleData(value) {
-        setGrade(() => value.grade)
+        let { statusMap, curId } = value
+        setGrade(() => statusMap.get(curId))
     }
 
     return (

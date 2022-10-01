@@ -13,6 +13,7 @@ export function Container({ value }) {
     const [showAnswer, setShowAnswer] = useState(false)
     const [cardTotal, setCardTotal] = useState(-1)
     const [showPressedCount, setShowPressedCount] = useState(0)
+    const [statusMap, setStatusMap] = useState(new Map())
 
     useEffect(() => { handleValue(value) }, [value])
 
@@ -22,6 +23,9 @@ export function Container({ value }) {
         let randIndex = Math.floor(Math.random() * data.length) //random number from range max min: (max -min) + min -> (data.length -0) - 0
         setCurIndex(() => randIndex)
         setCardTotal(() => data.length)
+        data.forEach(element => {
+            statusMap.set(element._id, '')
+        })
     }
 
     const handleNext = (e) => {
@@ -58,8 +62,10 @@ export function Container({ value }) {
         let cardAnswer = cards[curIndex].answer.toLowerCase()
         if (userAnswer !== cardAnswer) {
             setGrade(() => 'WRONG')
+            statusMap.set(cards[curIndex]._id, 'WRONG')
         } else {
             setGrade(() => 'PASS')
+            statusMap.set(cards[curIndex]._id, 'PASS')
         }
     }
 
@@ -99,7 +105,8 @@ export function Container({ value }) {
     return (
         <div>
             <CardDisplay value={{ "cards": cards, "answer": answer, "curIndex": curIndex }} />
-            <StatusLabel value={{ "grade": (showPressedCount > 0) ? 'WRONG' : (checkGrade()) ? grade : '' }} />
+            {/* <StatusLabel value={{ "grade": (showPressedCount > 0) ? 'WRONG' : (checkGrade()) ? grade : '', "statusMap": statusMap }} /> */}
+            <StatusLabel value={{ "statusMap": statusMap, "curId": (cards != undefined && cards.length > 0) ? cards[curIndex]._id : '' }} />
             <form className='form-display padding'>
                 <button id="showButton" onClick={(e) => handleShow(e)}>{(showAnswer) ? 'Hide Answer' : 'Show Answer'}</button>
                 <EditForm value={(cards != undefined && cards.length > 0) ? cards[curIndex]._id : ''} />
