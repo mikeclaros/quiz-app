@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { EditForm } from './EditForm'
 import { CardDisplay } from './CardDisplay'
+import { StatusLabel } from './StatusLabel'
 
 
 
@@ -10,6 +11,8 @@ export function Container({ value }) {
     const [grade, setGrade] = useState('')
     const [answer, setAnswer] = useState('')
     const [showAnswer, setShowAnswer] = useState(false)
+    const [cardTotal, setCardTotal] = useState(-1)
+    const [showPressedCount, setShowPressedCount] = useState(0)
 
     useEffect(() => { handleValue(value) }, [value])
 
@@ -18,6 +21,7 @@ export function Container({ value }) {
         setCards(() => data)
         let randIndex = Math.floor(Math.random() * data.length) //random number from range max min: (max -min) + min -> (data.length -0) - 0
         setCurIndex(() => randIndex)
+        setCardTotal(() => data.length)
     }
 
     const handleNext = (e) => {
@@ -68,6 +72,8 @@ export function Container({ value }) {
         if (showAnswer) {
             //if answer is shown then hide answer
             hideAnswer()
+        } else {
+            setShowPressedCount(() => showPressedCount + 1)
         }
     }
 
@@ -83,11 +89,17 @@ export function Container({ value }) {
 
     function clearGrade() {
         setGrade(() => '')
+        setShowPressedCount(() => 0)
+    }
+
+    function checkGrade() {
+        return (grade != undefined && grade !== '')
     }
 
     return (
         <div>
             <CardDisplay value={{ "cards": cards, "answer": answer, "curIndex": curIndex }} />
+            <StatusLabel value={{ "grade": (showPressedCount > 0) ? 'WRONG' : (checkGrade()) ? grade : '' }} />
             <form className='form-display padding'>
                 <button id="showButton" onClick={(e) => handleShow(e)}>{(showAnswer) ? 'Hide Answer' : 'Show Answer'}</button>
                 <EditForm value={(cards != undefined && cards.length > 0) ? cards[curIndex]._id : ''} />
@@ -96,9 +108,7 @@ export function Container({ value }) {
                 <input name='answer' placeholder='Enter Answer' />
                 <button id="submit">Submit</button>
             </form>
-            <div id="status" className='form-display padding'>
-                <div>{(grade != undefined && grade !== '') ? grade : ''}</div>
-            </div>
+
             <div className='btn padding'>
                 <button id="prev" onClick={(e) => handlePrev(e)}>Prev</button>
                 <button id="next" onClick={(e) => handleNext(e)}>Next</button>
