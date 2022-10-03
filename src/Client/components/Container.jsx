@@ -80,6 +80,7 @@ export function Container({ value }) {
             hideAnswer()
         } else {
             setShowPressedCount(() => showPressedCount + 1)
+            statusMap.set(cards[curIndex]._id, 'WRONG') //set to wrong when pressing show answer
         }
     }
 
