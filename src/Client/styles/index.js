@@ -12,3 +12,21 @@ word-break: break-all;
 hyphens: manual;
 background: ${props => props.background};
 `
+
+export const CustomTextArea = styled.textarea`
+    resize: none;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+    width: 50%;
+    height: 100px;
+`
+
+export const CustomInsertForm = styled.form`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 300px;
+`

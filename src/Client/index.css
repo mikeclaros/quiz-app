@@ -51,6 +51,14 @@
     margin: 35px;
 }
 
+.add-space-around {
+    justify-content: space-around;
+}
+
+.text-area-props {
+    resize: none;
+}
+
 .btn {
     display: flex;
     flex-direction: row;
