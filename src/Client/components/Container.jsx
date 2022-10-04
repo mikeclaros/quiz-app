@@ -97,6 +97,8 @@ export function Container({ value }) {
     function clearGrade() {
         setGrade(() => '')
         setShowPressedCount(() => 0)
+        //toggle 'show answer' button if answer is showing
+        setShowAnswer(() => (showAnswer) ? !showAnswer : showAnswer)
     }
 
     function checkGrade() {
