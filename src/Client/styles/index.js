@@ -30,3 +30,17 @@ export const CustomInsertForm = styled.form`
     justify-content: space-between;
     height: 300px;
 `
+
+export const EditCardDisplay = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 15em;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 5%;
+    width: 50%;
+    word-break: break-all;
+    hyphens: manual;
+`
