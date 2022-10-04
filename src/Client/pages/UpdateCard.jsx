@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import apis from '../api'
 import { useParams } from 'react-router-dom'
 import '../index.css'
+import { CustomInsertForm } from '../styles'
 const _ = require('lodash')
 
 export function UpdateCard() {
@@ -67,10 +68,10 @@ export function UpdateCard() {
 
 
     return (
-        <div className='update-form-display'>
+        <div className='update-page-display'>
             <p>CARD ID: {id}</p>
             <div className='edit-form-display'>
-                <form>
+                <CustomInsertForm>
                     <div className='basic-flex-column center-item'>
                         <span className='margin-washer'>{(!_.isEmpty(card)) ? card.data.question : ''}</span>
                         <input name='question' placeholder='Edit question here' />
@@ -82,7 +83,7 @@ export function UpdateCard() {
                     {/*dont put this button in a div... breaks code in handleEdit*/}
                     <button className='basic-flex-column margin-washer center-item' onClick={(e) => handleEdit(e)}>Submit</button>
                     <button className='basic-flex-column margin-washer center-item' onClick={(e) => handleDelete(e)}>Delete</button>
-                </form>
+                </CustomInsertForm>
             </div>
 
             <div className='basic-flex-column'>
