@@ -1,6 +1,7 @@
 # Quiz-App
 - Simple quiz flash card app. Created to practice making a backend.
 - Uses Mongodb for backend, and axios to use mongodb
+- Possible future improvements: improvements on UI
 
 # Install and Run
 ## Requirements
