@@ -17,5 +17,6 @@
 - React start: 
     >`npm run start`
 
-## Demo Video
-<video src="./demo.mp4" controls>
+## Quick Demo
+https://user-images.githubusercontent.com/11132034/213616218-7ba13715-d27e-4627-bbef-a27910d4788b.mp4
+
